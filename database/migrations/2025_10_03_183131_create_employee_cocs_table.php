@@ -24,10 +24,9 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamp('effective_date')->nullable();
 
-            // Approved by (optional), references users.id
-            $table->foreignUlid('approved_by')
-                  ->nullable()
-                  ->constrained('users');
+            // Approved by (optional), compatible with users.id
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->foreign('approved_by')->references('id')->on('users');
 
             $table->timestamps();
         });
